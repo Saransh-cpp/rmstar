@@ -1,6 +1,6 @@
-# removestar
+# rmstar
 
-[![Build Status](https://github.com/asmeurer/removestar/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/asmeurer/removestar/actions?query=branch:master)
+[![Build Status](https://github.com/asmeurer/rmstar/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/asmeurer/rmstar/actions?query=branch:master)
 
 Tool to automatically replace `import *` imports in Python files with explicit imports
 
@@ -11,41 +11,41 @@ Current limitations:
 - Assumes only names in the current file are used by star imports (e.g., it
   won't work to replace star imports in `__init__.py`).
 
-For files within the same module, removestar determines missing imported names
+For files within the same module, rmstar determines missing imported names
 statically. For external library imports, including imports of standard
 library modules, it dynamically imports the module to determine the names.
 This can be disabled with the `--no-dynamic-importing` flag.
 
-See the [issue tracker](https://github.com/asmeurer/removestar/issues). Pull
+See the [issue tracker](https://github.com/asmeurer/rmstar/issues). Pull
 requests are welcome.
 
 ## Installation
 
 ```
-pip install removestar
+pip install rmstar
 ```
 
 or if you use conda
 
 ```
-conda install -c conda-forge removestar
+conda install -c conda-forge rmstar
 ```
 
 ## Usage
 
 ```
-$ removestar file.py # Shows diff but does not edit file.py
+$ rmstar file.py # Shows diff but does not edit file.py
 
-$ removestar -i file.py # Edits file.py in-place
+$ rmstar -i file.py # Edits file.py in-place
 
-$ removestar -i module/ # Modifies every Python file in module/ recursively
+$ rmstar -i module/ # Modifies every Python file in module/ recursively
 ```
 
 ## Why is `import *` so bad?
 
 Doing `from module import *` is generally frowned upon in Python. It is
 considered acceptable when working interactively at a `python` prompt, or in
-`__init__.py` files (removestar skips `__init__.py` files by default).
+`__init__.py` files (rmstar skips `__init__.py` files by default).
 
 Some reasons why `import *` is bad:
 
@@ -90,7 +90,7 @@ files:
 
 Unfortunately, if you come across a file in the wild that uses `import *`, it
 can be hard to fix it, because you need to find every name in the file that is
-imported from the `*`. Removestar makes this easy by finding which names come
+imported from the `*`. rmstar makes this easy by finding which names come
 from `*` imports and replacing the import lines in the file automatically.
 
 ## Example
@@ -120,10 +120,10 @@ x = 1
 y = 2
 ```
 
-Then `removestar` works like:
+Then `rmstar` works like:
 
 ```
-$ removestar mymod/
+$ rmstar mymod/
 
 --- original/mymod/a.py
 +++ fixed/mymod/a.py
@@ -140,7 +140,7 @@ $ removestar mymod/
 This does not edit `a.py` by default. The `-i` flag causes it to edit `a.py` in-place:
 
 ```
-$ removestar -i mymod/
+$ rmstar -i mymod/
 $ cat mymod/a.py
 # mymod/a.py
 from .b import y
@@ -154,8 +154,8 @@ def func(x):
 <!-- TODO: Autogenerate this somehow -->
 
 ```
-$ removestar --help
-usage: removestar [-h] [-i] [--version] [--no-skip-init]
+$ rmstar --help
+usage: rmstar [-h] [-i] [--version] [--no-skip-init]
                   [--no-dynamic-importing] [-v] [-q]
                   [--max-line-length MAX_LINE_LENGTH]
                   PATH [PATH ...]
@@ -166,11 +166,11 @@ Requires pyflakes.
 
 Usage:
 
-$ removestar file.py # Shows diff but does not edit file.py
+$ rmstar file.py # Shows diff but does not edit file.py
 
-$ removestar -i file.py # Edits file.py in-place
+$ rmstar -i file.py # Edits file.py in-place
 
-$ removestar -i module/ # Modifies every Python file in module/ recursively
+$ rmstar -i module/ # Modifies every Python file in module/ recursively
 
 positional arguments:
   PATH                  Files or directories to fix
@@ -178,7 +178,7 @@ positional arguments:
 optional arguments:
   -h, --help            show this help message and exit
   -i, --in-place        Edit the files in-place. (default: False)
-  --version             Show removestar version number and exit.
+  --version             Show rmstar version number and exit.
   --no-skip-init        Don't skip __init__.py files (they are skipped by
                         default) (default: True)
   --no-dynamic-importing
@@ -197,7 +197,7 @@ optional arguments:
 
 ## Whitelisting star imports
 
-`removestar` does not replace star import lines that are marked with
+`rmstar` does not replace star import lines that are marked with
 [Flake8 `noqa` comments][noqa-comments] that permit star imports (`F401` or
 `F403`).
 

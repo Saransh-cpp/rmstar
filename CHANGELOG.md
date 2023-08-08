@@ -36,9 +36,9 @@ Thanks to [@h4l](https://github.com/h4l) for these improvements.
 
 # 1.2 (2019-08-16)
 ## New Features
-- removestar now works correctly with recursive star imports. In particular,
+- rmstar now works correctly with recursive star imports. In particular,
   `from .submod import *` now works when submod is a submodule whose
-  `__init__.py` itself uses `import *` (removestar still skips `__init__.py`
+  `__init__.py` itself uses `import *` (rmstar still skips `__init__.py`
   files by default).
 - `__all__` is now respected.
 - The full path to the file is printed for `--verbose` messages.

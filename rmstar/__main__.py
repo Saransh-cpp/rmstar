@@ -6,11 +6,11 @@ Requires pyflakes.
 
 Usage:
 
-$ removestar file.py # Shows diff but does not edit file.py
+$ rmstar file.py # Shows diff but does not edit file.py
 
-$ removestar -i file.py # Edits file.py in-place
+$ rmstar -i file.py # Edits file.py in-place
 
-$ removestar -i module/ # Modifies every Python file in module/ recursively
+$ rmstar -i module/ # Modifies every Python file in module/ recursively
 
 """
 from . import __version__
@@ -21,19 +21,19 @@ import io
 import os
 import sys
 
-from .removestar import fix_code
+from .rmstar import fix_code
 from .helper import get_diff_text
 
 class RawDescriptionHelpArgumentDefaultsHelpFormatter(argparse.RawDescriptionHelpFormatter, argparse.ArgumentDefaultsHelpFormatter):
     pass
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, prog='removestar', formatter_class=RawDescriptionHelpArgumentDefaultsHelpFormatter)
+    parser = argparse.ArgumentParser(description=__doc__, prog='rmstar', formatter_class=RawDescriptionHelpArgumentDefaultsHelpFormatter)
     parser.add_argument('paths', nargs='+',
                         help="Files or directories to fix", metavar="PATH")
     parser.add_argument('-i', '--in-place', action='store_true', help="Edit the files in-place.")
     parser.add_argument('--version', action='version', version='%(prog)s ' +
-    __version__, help="Show removestar version number and exit.")
+    __version__, help="Show rmstar version number and exit.")
     parser.add_argument('--no-skip-init', action='store_false',
                         dest='skip_init', help="Don't skip __init__.py files (they are skipped by default)")
     parser.add_argument('--no-dynamic-importing', action='store_false', dest='allow_dynamic', help="""Don't dynamically import modules to determine the list of names. This is required for star imports from external modules and modules in the standard library.""")
