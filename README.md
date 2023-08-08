@@ -1,6 +1,6 @@
 # rmstar
 
-[![Build Status](https://github.com/asmeurer/rmstar/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/asmeurer/rmstar/actions?query=branch:master)
+[![Build rmstar](https://github.com/Saransh-cpp/rmstar/actions/workflows/ci.yml/badge.svg)](https://github.com/Saransh-cpp/rmstar/actions/workflows/ci.yml)
 
 Tool to automatically replace `import *` imports in Python files with explicit imports
 
