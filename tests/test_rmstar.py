@@ -7,7 +7,6 @@ from pathlib import Path
 
 import pytest
 from pyflakes.checker import Checker
-from pytest import raises
 from rmstar.rmstar import (
     ExternalModuleError,
     fix_code,
@@ -472,7 +471,7 @@ def test_get_names():
     names = get_names(code_submod4)
     assert names == {"..*"}
 
-    raises(SyntaxError, lambda: get_names(code_bad_syntax))
+    pytest.raises(SyntaxError, lambda: get_names(code_bad_syntax))
 
     names = get_names(code_mod_unfixable)
     assert names == {".mod1.*", ".mod2.*", "func"}
@@ -513,14 +512,14 @@ def test_get_names_from_dir(tmpdir, relative):
         assert get_names_from_dir(".mod6", directory) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir(".mod6", directory, allow_dynamic=False),
         )
         assert get_names_from_dir(".mod7", directory) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir(".mod7", directory, allow_dynamic=False),
         )
@@ -560,14 +559,14 @@ def test_get_names_from_dir(tmpdir, relative):
         assert get_names_from_dir("module.mod6", directory) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("module.mod6", directory, allow_dynamic=False),
         )
         assert get_names_from_dir("module.mod7", directory) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("module.mod7", directory, allow_dynamic=False),
         )
@@ -615,12 +614,12 @@ def test_get_names_from_dir(tmpdir, relative):
         assert get_names_from_dir("..mod4", submod) == mod4_names
         assert get_names_from_dir("..mod5", submod) == mod5_names
         assert get_names_from_dir("..mod6", submod) == get_names_dynamically("os.path")
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("..mod6", submod, allow_dynamic=False),
         )
         assert get_names_from_dir("..mod7", submod) == get_names_dynamically("os.path")
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("..mod7", submod, allow_dynamic=False),
         )
@@ -655,14 +654,14 @@ def test_get_names_from_dir(tmpdir, relative):
         assert get_names_from_dir("module.mod6", submod) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("module.mod6", submod, allow_dynamic=False),
         )
         assert get_names_from_dir("module.mod7", submod) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("module.mod7", submod, allow_dynamic=False),
         )
@@ -709,14 +708,14 @@ def test_get_names_from_dir(tmpdir, relative):
         assert get_names_from_dir("..mod6", submod_recursive) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("..mod6", submod_recursive, allow_dynamic=False),
         )
         assert get_names_from_dir("..mod7", submod_recursive) == get_names_dynamically(
             "os.path"
         )
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("..mod7", submod_recursive, allow_dynamic=False),
         )
@@ -756,14 +755,14 @@ def test_get_names_from_dir(tmpdir, relative):
         assert get_names_from_dir(
             "module.mod6", submod_recursive
         ) == get_names_dynamically("os.path")
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("module.mod6", submod, allow_dynamic=False),
         )
         assert get_names_from_dir(
             "module.mod7", submod_recursive
         ) == get_names_dynamically("os.path")
-        raises(
+        pytest.raises(
             NotImplementedError,
             lambda: get_names_from_dir("module.mod7", submod, allow_dynamic=False),
         )
@@ -811,12 +810,20 @@ def test_get_names_from_dir(tmpdir, relative):
             == submod_recursive_submod2_names
         )
 
-        raises(ExternalModuleError, lambda: get_names_from_dir("os.path", directory))
-        raises(ExternalModuleError, lambda: get_names_from_dir("os.path", submod))
-        raises(RuntimeError, lambda: get_names_from_dir(".mod_bad", directory))
-        raises(RuntimeError, lambda: get_names_from_dir("module.mod_bad", directory))
-        raises(RuntimeError, lambda: get_names_from_dir(".mod_doesnt_exist", directory))
-        raises(
+        pytest.raises(
+            ExternalModuleError, lambda: get_names_from_dir("os.path", directory)
+        )
+        pytest.raises(
+            ExternalModuleError, lambda: get_names_from_dir("os.path", submod)
+        )
+        pytest.raises(RuntimeError, lambda: get_names_from_dir(".mod_bad", directory))
+        pytest.raises(
+            RuntimeError, lambda: get_names_from_dir("module.mod_bad", directory)
+        )
+        pytest.raises(
+            RuntimeError, lambda: get_names_from_dir(".mod_doesnt_exist", directory)
+        )
+        pytest.raises(
             RuntimeError,
             lambda: get_names_from_dir("module.mod_doesnt_exist", directory),
         )
@@ -857,7 +864,9 @@ def test_get_names_dynamically(tmpdir):
         assert get_names_dynamically("module.submod.submod1") == submod1_names
         assert get_names_dynamically("module.submod.submod2") == submod2_names
         assert get_names_dynamically("module.submod.submod3") == submod3_names
-        raises(RuntimeError, lambda: get_names_dynamically("module.submod.submod4"))
+        pytest.raises(
+            RuntimeError, lambda: get_names_dynamically("module.submod.submod4")
+        )
         assert (
             get_names_dynamically("module.submod_recursive")
             == submod_recursive_dynamic_names
@@ -875,7 +884,7 @@ def test_get_names_dynamically(tmpdir):
     finally:
         sys.path = sys_path
 
-    raises(RuntimeError, lambda: get_names_dynamically("notarealmodule"))
+    pytest.raises(RuntimeError, lambda: get_names_dynamically("notarealmodule"))
 
 
 def test_fix_code(tmpdir, capsys):
@@ -927,7 +936,7 @@ def test_fix_code(tmpdir, capsys):
     assert not out
     assert not err
 
-    assert raises(
+    assert pytest.raises(
         NotImplementedError,
         lambda: fix_code(code_mod6, file=directory / "mod6.py", allow_dynamic=False),
     )
@@ -937,7 +946,7 @@ def test_fix_code(tmpdir, capsys):
     assert not out
     assert not err
 
-    assert raises(
+    assert pytest.raises(
         NotImplementedError,
         lambda: fix_code(code_mod7, file=directory / "mod7.py", allow_dynamic=False),
     )
@@ -1059,7 +1068,7 @@ def test_fix_code(tmpdir, capsys):
     assert not out
     assert not err
 
-    raises(
+    pytest.raises(
         RuntimeError, lambda: fix_code(code_bad_syntax, file=directory / "mod_bad.py")
     )
     out, err = capsys.readouterr()
@@ -1106,7 +1115,7 @@ def test_get_mod_filename(tmpdir, relative):
         _test(".submod.mod1", module, submod / "mod1.py")
         _test(".submod.submod", module, subsubmod / "__init__.py")
         _test(".submod.submod.mod1", module, subsubmod / "mod1.py")
-        raises(RuntimeError, lambda: get_mod_filename(".notreal", module))
+        pytest.raises(RuntimeError, lambda: get_mod_filename(".notreal", module))
 
         _test("module", module, module / "__init__.py")
         _test("module.mod1", module, module / "mod1.py")
@@ -1114,9 +1123,13 @@ def test_get_mod_filename(tmpdir, relative):
         _test("module.submod.mod1", module, submod / "mod1.py")
         _test("module.submod.submod", module, subsubmod / "__init__.py")
         _test("module.submod.submod.mod1", module, subsubmod / "mod1.py")
-        raises(RuntimeError, lambda: get_mod_filename("module.notreal", module))
-        raises(RuntimeError, lambda: get_mod_filename("module.submod.notreal", module))
-        raises(ExternalModuleError, lambda: get_mod_filename("notreal.notreal", module))
+        pytest.raises(RuntimeError, lambda: get_mod_filename("module.notreal", module))
+        pytest.raises(
+            RuntimeError, lambda: get_mod_filename("module.submod.notreal", module)
+        )
+        pytest.raises(
+            ExternalModuleError, lambda: get_mod_filename("notreal.notreal", module)
+        )
 
         _test("..", submod, module / "__init__.py")
         _test("..mod1", submod, module / "mod1.py")
@@ -1128,8 +1141,8 @@ def test_get_mod_filename(tmpdir, relative):
         _test(".submod.mod1", submod, subsubmod / "mod1.py")
         _test("..submod.submod", submod, subsubmod / "__init__.py")
         _test("..submod.submod.mod1", submod, subsubmod / "mod1.py")
-        raises(RuntimeError, lambda: get_mod_filename(".notreal", submod))
-        raises(RuntimeError, lambda: get_mod_filename("..notreal", submod))
+        pytest.raises(RuntimeError, lambda: get_mod_filename(".notreal", submod))
+        pytest.raises(RuntimeError, lambda: get_mod_filename("..notreal", submod))
 
         _test("module", submod, module / "__init__.py")
         _test("module.mod1", submod, module / "mod1.py")
@@ -1137,9 +1150,13 @@ def test_get_mod_filename(tmpdir, relative):
         _test("module.submod.mod1", submod, submod / "mod1.py")
         _test("module.submod.submod", submod, subsubmod / "__init__.py")
         _test("module.submod.submod.mod1", submod, subsubmod / "mod1.py")
-        raises(RuntimeError, lambda: get_mod_filename("module.notreal", submod))
-        raises(RuntimeError, lambda: get_mod_filename("module.submod.notreal", submod))
-        raises(ExternalModuleError, lambda: get_mod_filename("notreal.notreal", submod))
+        pytest.raises(RuntimeError, lambda: get_mod_filename("module.notreal", submod))
+        pytest.raises(
+            RuntimeError, lambda: get_mod_filename("module.submod.notreal", submod)
+        )
+        pytest.raises(
+            ExternalModuleError, lambda: get_mod_filename("notreal.notreal", submod)
+        )
 
         _test("...", subsubmod, module / "__init__.py")
         _test("...mod1", subsubmod, module / "mod1.py")
@@ -1153,9 +1170,9 @@ def test_get_mod_filename(tmpdir, relative):
         _test("...submod.submod.mod1", subsubmod, subsubmod / "mod1.py")
         _test("..submod", subsubmod, subsubmod / "__init__.py")
         _test("..submod.mod1", subsubmod, subsubmod / "mod1.py")
-        raises(RuntimeError, lambda: get_mod_filename(".notreal", subsubmod))
-        raises(RuntimeError, lambda: get_mod_filename("..notreal", subsubmod))
-        raises(RuntimeError, lambda: get_mod_filename("..notreal", subsubmod))
+        pytest.raises(RuntimeError, lambda: get_mod_filename(".notreal", subsubmod))
+        pytest.raises(RuntimeError, lambda: get_mod_filename("..notreal", subsubmod))
+        pytest.raises(RuntimeError, lambda: get_mod_filename("..notreal", subsubmod))
 
         _test("module", subsubmod, module / "__init__.py")
         _test("module.mod1", subsubmod, module / "mod1.py")
@@ -1163,11 +1180,13 @@ def test_get_mod_filename(tmpdir, relative):
         _test("module.submod.mod1", subsubmod, submod / "mod1.py")
         _test("module.submod.submod", subsubmod, subsubmod / "__init__.py")
         _test("module.submod.submod.mod1", subsubmod, subsubmod / "mod1.py")
-        raises(RuntimeError, lambda: get_mod_filename("module.notreal", subsubmod))
-        raises(
+        pytest.raises(
+            RuntimeError, lambda: get_mod_filename("module.notreal", subsubmod)
+        )
+        pytest.raises(
             RuntimeError, lambda: get_mod_filename("module.submod.notreal", subsubmod)
         )
-        raises(
+        pytest.raises(
             ExternalModuleError, lambda: get_mod_filename("notreal.notreal", subsubmod)
         )
     finally:
@@ -1513,11 +1532,13 @@ from reallyreallylongmodulename import (longname1, longname2, longname3, longnam
                                         longname8, longname9)"""
     )
 
+    assert_to = 136
+
     assert (
         len(
             "from reallyreallylongmodulename import longname1, longname2, longname3, longname4, longname5, longname6, longname7, longname8, longname9"
         )
-        == 136
+        == assert_to
     )
 
     assert replace_imports(code, repls, max_line_length=137) == code_fixed.format(

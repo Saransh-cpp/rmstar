@@ -1,9 +1,3 @@
-from pyflakes.checker import _MAGIC_GLOBALS, Checker, ModuleScope
-from pyflakes.messages import ImportStarUsage, ImportStarUsed
-
-# quit and exit are not included in old versions of pyflakes
-MAGIC_GLOBALS = set(_MAGIC_GLOBALS).union({"quit", "exit"})
-
 import ast
 import builtins
 import os
@@ -11,6 +5,12 @@ import re
 import sys
 from functools import lru_cache
 from pathlib import Path
+
+from pyflakes.checker import _MAGIC_GLOBALS, Checker, ModuleScope
+from pyflakes.messages import ImportStarUsage, ImportStarUsed
+
+# quit and exit are not included in old versions of pyflakes
+MAGIC_GLOBALS = set(_MAGIC_GLOBALS).union({"quit", "exit"})
 
 
 def names_to_replace(checker):
