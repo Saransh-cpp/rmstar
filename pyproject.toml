@@ -32,19 +32,16 @@ dynamic = [
 dependencies = [
   "pyflakes",
 ]
-
 [project.optional-dependencies]
 dev = [
   "pytest>=6",
   "pytest-cov>=3",
   "pytest-doctestplus",
 ]
-
 [project.urls]
 "Bug Tracker" = "https://github.com/Saransh-cpp/rmstar/issues"
 Homepage = "https://www.asmeurer.com/Saransh-cpp/"
 "Source Code" = "https://github.com/Saransh-cpp/rmstar"
-
 [project.scripts]
 rmstar = "rmstar.__main__:main"
 
