@@ -8,18 +8,21 @@
 [![PyPI platforms][pypi-platforms]][pypi-link]
 [![PyPI version][pypi-version]][pypi-link]
 [![LICENSE][license-badge]][license-link]
+[![Ruff][ruff-badge]][ruff-link]
 
 Tool to automatically replace `import *` imports in Python files with explicit imports
 
+> rmstar is an actively maintained fork of the original [removestar](https://github.com/asmeurer/removestar) (which is now not actively maintained). All the credits for the original code and logic goes to [Aaron Meurer (or asmeurer)](https://github.com/asmeurer) and the contributors of removestar. This repository keeps the original commits intact and builds on top of them. rmstar also comes as a `pre-commit` hook for ease of use (which was the original motivation behind this fork).
+
 ## Installation
 
-```
+```bash
 pip install rmstar
 ```
 
 ## Usage
 
-```
+```bash
 $ rmstar file.py # Shows diff but does not edit file.py
 
 $ rmstar -i file.py # Edits file.py in-place
@@ -83,7 +86,7 @@ from `*` imports and replacing the import lines in the file automatically.
 
 Suppose you have a module `mymod` like
 
-```
+```bash
 mymod/
   | __init__.py
   | a.py
@@ -108,7 +111,7 @@ y = 2
 
 Then `rmstar` works like:
 
-```
+```diff
 $ rmstar mymod/
 
 --- original/mymod/a.py
@@ -125,7 +128,7 @@ $ rmstar mymod/
 
 This does not edit `a.py` by default. The `-i` flag causes it to edit `a.py` in-place:
 
-```
+```bash
 $ rmstar -i mymod/
 $ cat mymod/a.py
 # mymod/a.py
@@ -137,7 +140,7 @@ def func(x):
 
 ## Command line options
 
-```
+```bash
 $ rmstar --help
 usage: rmstar [-h] [-i] [--version] [--no-skip-init]
                   [--no-dynamic-importing] [-v] [-q]
@@ -220,3 +223,5 @@ This can be disabled with the `--no-dynamic-importing` flag.
 [pypi-link]: https://pypi.org/project/rmstar/
 [pypi-platforms]: https://img.shields.io/pypi/pyversions/rmstar
 [pypi-version]: https://badge.fury.io/py/rmstar.svg
+[ruff-badge]: https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json
+[ruff-link]: https://github.com/astral-sh/ruff

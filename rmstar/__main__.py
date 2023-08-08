@@ -67,12 +67,6 @@ def main():
         help="""Print information about every imported name that is replaced.""",
     )
     parser.add_argument(
-        "-q",
-        "--quiet",
-        action="store_true",
-        help="""Don't print any warning messages.""",
-    )
-    parser.add_argument(
         "--max-line-length",
         type=int,
         default=100,
@@ -90,14 +84,14 @@ def main():
     if args.max_line_length == 0:
         args.max_line_length = float("inf")
 
+    exit_1 = False
     for file in _iter_paths(args.paths):
-        directory, filename = os.path.split(file)
+        _, filename = os.path.split(file)
         if args.skip_init and filename == "__init__.py":
             continue
 
         if not os.path.isfile(file):
             print(f"Error: {file}: no such file or directory", file=sys.stderr)
-            continue
 
         with open(file, encoding="utf-8") as f:
             code = f.read()
@@ -108,15 +102,14 @@ def main():
                 file=file,
                 max_line_length=args.max_line_length,
                 verbose=args.verbose,
-                quiet=args.quiet,
                 allow_dynamic=args.allow_dynamic,
             )
         except (RuntimeError, NotImplementedError) as e:
-            if not args.quiet:
-                print(f"Error with {file}: {e}", file=sys.stderr)
-            continue
+            print(f"Error with {file}: {e}", file=sys.stderr)
+            sys.exit(1)
 
         if new_code != code:
+            exit_1 = True
             if args.in_place:
                 with open(file, "w", encoding="utf-8") as f:
                     f.write(new_code)
@@ -128,6 +121,9 @@ def main():
                         file,
                     )
                 )
+                
+                
+    if exit_1: sys.exit(1)
 
 
 def _iter_paths(paths):

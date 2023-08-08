@@ -40,7 +40,7 @@ dev = [
 ]
 [project.urls]
 "Bug Tracker" = "https://github.com/Saransh-cpp/rmstar/issues"
-Homepage = "https://www.asmeurer.com/Saransh-cpp/"
+Homepage = "https://github.com/Saransh-cpp/rmstar/"
 "Source Code" = "https://github.com/Saransh-cpp/rmstar"
 [project.scripts]
 rmstar = "rmstar.__main__:main"

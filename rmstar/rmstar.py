@@ -31,7 +31,7 @@ def star_imports(checker):
 
 
 def fix_code(
-    code, *, file, max_line_length=100, verbose=False, quiet=False, allow_dynamic=True
+    code, *, file, max_line_length=100, verbose=False, allow_dynamic=True
 ):
     """
     Return a fixed version of the code `code` from the file `file`
@@ -63,13 +63,12 @@ def fix_code(
     for name in names:
         mods = [mod for mod in mod_names if name in mod_names[mod]]
         if not mods:
-            if not quiet:
-                print(
-                    f"Warning: {file}: could not find import for '{name}'",
-                    file=sys.stderr,
-                )
+            print(
+                f"Warning: {file}: could not find import for '{name}'",
+                file=sys.stderr,
+            )
             continue
-        if len(mods) > 1 and not quiet:
+        if len(mods) > 1:
             print(
                 f"Warning: {file}: '{name}' comes from multiple modules: {', '.join(map(repr, mods))}. Using '{mods[-1]}'.",
                 file=sys.stderr,
@@ -82,7 +81,6 @@ def fix_code(
         repls,
         file=file,
         verbose=verbose,
-        quiet=quiet,
         max_line_length=max_line_length,
     )
 
@@ -90,7 +88,7 @@ def fix_code(
 
 
 def replace_imports(
-    code, repls, *, max_line_length=100, file=None, verbose=False, quiet=False
+    code, repls, *, max_line_length=100, file=None, verbose=False
 ):
     """
     Replace the star imports in code
@@ -107,9 +105,6 @@ def replace_imports(
     If file is provided it is only used for the verbose messages.
 
     If verbose=True (default: True), a message is printed for each import that is replaced.
-
-    If quiet=True (default: False), a warning is printed if no replacements
-    are made. The quiet flag does not affect the messages from verbose=True.
 
     Example:
 
@@ -169,12 +164,11 @@ def replace_imports(
                 )
 
             if not new_import and comment:
-                if not quiet:
-                    print(
-                        f"{warning_prefix}The removed star import statement for '{mod}' "
-                        f"had an inline comment which may not make sense without the import",
-                        file=sys.stderr,
-                    )
+                print(
+                    f"{warning_prefix}The removed star import statement for '{mod}' "
+                    f"had an inline comment which may not make sense without the import",
+                    file=sys.stderr,
+                )
                 return f"{comment}\n"
             if not (new_import or after_import):
                 return ""
@@ -182,7 +176,7 @@ def replace_imports(
 
         star_import = re.compile(rf"from +{re.escape(mod)} +import +\*( *(#.*))?\n")
         new_code, subs_made = star_import.subn(star_import_replacement, code)
-        if subs_made == 0 and not quiet:
+        if subs_made == 0:
             print(
                 f"{warning_prefix}Could not find the star imports for '{mod}'",
                 file=sys.stderr,
