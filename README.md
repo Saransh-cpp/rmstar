@@ -1,34 +1,20 @@
 # rmstar
 
-[![Build rmstar](https://github.com/Saransh-cpp/rmstar/actions/workflows/ci.yml/badge.svg)](https://github.com/Saransh-cpp/rmstar/actions/workflows/ci.yml)
+[![Actions Status][actions-badge]][actions-link]
+[![pre-commit.ci status][pre-commit-badge]][pre-commit-link]
+[![codecov percentage][codecov-badge]][codecov-link]
+[![GitHub Discussion][github-discussions-badge]][github-discussions-link]
+
+[![PyPI platforms][pypi-platforms]][pypi-link]
+[![PyPI version][pypi-version]][pypi-link]
+[![LICENSE][license-badge]][license-link]
 
 Tool to automatically replace `import *` imports in Python files with explicit imports
-
-Requires pyflakes.
-
-Current limitations:
-
-- Assumes only names in the current file are used by star imports (e.g., it
-  won't work to replace star imports in `__init__.py`).
-
-For files within the same module, rmstar determines missing imported names
-statically. For external library imports, including imports of standard
-library modules, it dynamically imports the module to determine the names.
-This can be disabled with the `--no-dynamic-importing` flag.
-
-See the [issue tracker](https://github.com/asmeurer/rmstar/issues). Pull
-requests are welcome.
 
 ## Installation
 
 ```
 pip install rmstar
-```
-
-or if you use conda
-
-```
-conda install -c conda-forge rmstar
 ```
 
 ## Usage
@@ -151,8 +137,6 @@ def func(x):
 
 ## Command line options
 
-<!-- TODO: Autogenerate this somehow -->
-
 ```
 $ rmstar --help
 usage: rmstar [-h] [-i] [--version] [--no-skip-init]
@@ -213,10 +197,26 @@ def func(x):
     return x + y
 ```
 
-## Changelog
+## Current limitations
 
-See the [CHANGELOG](CHANGELOG.md) file.
+Assumes only names in the current file are used by star imports (e.g., it
+won't work to replace star imports in `__init__.py`).
 
-## License
+For files within the same module, rmstar determines missing imported names
+statically. For external library imports, including imports of standard
+library modules, it dynamically imports the module to determine the names.
+This can be disabled with the `--no-dynamic-importing` flag.
 
-[MIT](LICENSE)
+[actions-badge]: https://github.com/Saransh-cpp/rmstar/workflows/CI/badge.svg
+[actions-link]: https://github.com/Saransh-cpp/rmstar/actions
+[codecov-badge]: https://codecov.io/gh/Saransh-cpp/rmstar/branch/main/graph/badge.svg?token=YBv60ueORQ
+[codecov-link]: https://codecov.io/gh/Saransh-cpp/rmstar
+[github-discussions-badge]: https://img.shields.io/static/v1?label=Discussions&message=Ask&color=blue&logo=github
+[github-discussions-link]: https://github.com/Saransh-cpp/rmstar/discussions
+[license-badge]: https://img.shields.io/badge/MIT-blue.svg
+[license-link]: https://opensource.org/licenses/MIT
+[pre-commit-badge]: https://results.pre-commit.ci/badge/github/Saransh-cpp/rmstar/develop.svg
+[pre-commit-link]: https://results.pre-commit.ci/repo/github/Saransh-cpp/rmstar
+[pypi-link]: https://pypi.org/project/rmstar/
+[pypi-platforms]: https://img.shields.io/pypi/pyversions/rmstar
+[pypi-version]: https://badge.fury.io/py/rmstar.svg
