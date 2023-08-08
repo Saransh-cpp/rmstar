@@ -1,7 +1,7 @@
 - id: rmstar
   name: rmstar
   description: "Automatically replace `import *` imports in Python files with explicit imports"
-  entry: rmstar .
+  entry: rmstar
   language: python
   "types_or": [python, pyi]
   args: []
