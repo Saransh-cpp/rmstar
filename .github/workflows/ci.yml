@@ -1,4 +1,4 @@
-name: Build rmstar
+name: CI
 
 on:
   push:
@@ -36,13 +36,9 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: Install rmstar
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install pyflakes pytest pytest-doctestplus
-      - name: Test
+          python -m pip install ".[dev]""
+      - name: Test rmstar
         run: |
           pytest
-      - name: Install
-        run: |
-          python -m pip install .
