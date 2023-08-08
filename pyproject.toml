@@ -1,47 +1,52 @@
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+requires = [
+  "hatch-vcs",
+  "hatchling",
+]
 
 [project]
 name = "rmstar"
-readme = { file = "README.md", content-type = "text/markdown" }
-dynamic = ["version"]
 description = "A tool to automatically replace 'import *' imports with explicit imports in files"
+readme = { file = "README.md", content-type = "text/markdown" }
 license = "MIT"
-requires-python = ">=3.7"
 authors = [
     { name = "Saransh Chopra", email = "saransh0701@gmail.com" },
 ]
+requires-python = ">=3.7"
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
+  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+dynamic = [
+  "version",
 ]
 dependencies = [
-    "pyflakes",
+  "pyflakes",
 ]
 
 [project.optional-dependencies]
 dev = [
   "pytest>=6",
   "pytest-cov>=3",
-  "pytest-doctestplus"
+  "pytest-doctestplus",
 ]
-
-
-[project.scripts]
-rmstar = "rmstar.__main__:main"
 
 [project.urls]
 "Bug Tracker" = "https://github.com/Saransh-cpp/rmstar/issues"
 Homepage = "https://www.asmeurer.com/Saransh-cpp/"
 "Source Code" = "https://github.com/Saransh-cpp/rmstar"
+
+[project.scripts]
+rmstar = "rmstar.__main__:main"
 
 [tool.hatch]
 version.source = "vcs"
