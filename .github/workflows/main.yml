@@ -2,14 +2,29 @@ name: Build rmstar
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request:
-    branches: [ master ]
+    branches: [main]
 
-env:
-  SHELLOPTS: errexit:nounset:pipefail
+  workflow_dispatch:
+
+concurrency:
+  # Skip intermediate builds: always.
+  # Cancel intermediate builds: only if it is a pull request build.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 
 jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    name: Check SDist
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: pre-commit/action@v3.0.0
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -25,10 +40,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyflakes pytest pytest-doctestplus ruff
-      - name: Lint
-        run: |
-          ruff --select=A,B,E,F,PLC,PLE,PLW,SIM,W --ignore=B023,B904,E402,PLC1901,SIM115 --line-length=263 --statistics .
-          python -We:invalid -We::SyntaxWarning -m compileall -f -q rmstar/
       - name: Test
         run: |
           pytest
