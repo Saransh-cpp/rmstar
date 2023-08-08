@@ -67,6 +67,12 @@ def main():
         help="""Print information about every imported name that is replaced.""",
     )
     parser.add_argument(
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="""Don't print any warning messages.""",
+    )
+    parser.add_argument(
         "--max-line-length",
         type=int,
         default=100,
@@ -92,6 +98,7 @@ def main():
 
         if not os.path.isfile(file):
             print(f"Error: {file}: no such file or directory", file=sys.stderr)
+            continue
 
         with open(file, encoding="utf-8") as f:
             code = f.read()
@@ -102,11 +109,13 @@ def main():
                 file=file,
                 max_line_length=args.max_line_length,
                 verbose=args.verbose,
+                quiet=args.quiet,
                 allow_dynamic=args.allow_dynamic,
             )
         except (RuntimeError, NotImplementedError) as e:
-            print(f"Error with {file}: {e}", file=sys.stderr)
-            sys.exit(1)
+            if not args.quiet:
+                print(f"Error with {file}: {e}", file=sys.stderr)
+            continue
 
         if new_code != code:
             exit_1 = True
@@ -121,9 +130,9 @@ def main():
                         file,
                     )
                 )
-                
-                
-    if exit_1: sys.exit(1)
+
+    if exit_1:
+        sys.exit(1)
 
 
 def _iter_paths(paths):
