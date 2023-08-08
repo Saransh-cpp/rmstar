@@ -38,7 +38,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install rmstar
         run: |
-          python -m pip install ".[dev]""
+          python -m pip install -e ".[dev]"
       - name: Test rmstar
         run: |
           pytest
