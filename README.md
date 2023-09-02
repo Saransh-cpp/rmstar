@@ -16,6 +16,8 @@
 
 Tool to automatically replace `import *` imports in Python files with explicit imports
 
+> **Note**
+>
 > rmstar is an actively maintained fork of the original [removestar](https://github.com/asmeurer/removestar) (which is now not actively maintained). All the credits for the original code and logic goes to [Aaron Meurer (or asmeurer)](https://github.com/asmeurer) and the contributors of removestar. This repository keeps the original commits intact and builds on top of them. rmstar also comes as a `pre-commit` hook for ease of use (which was the original motivation behind this fork).
 
 ## Installation
