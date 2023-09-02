@@ -1,5 +1,9 @@
 # rmstar
 
+> **Warning**
+>
+> This is not ready to be used as a pre-commit hook yet. The CLI works fine, and the infrastructure is up-to-date. This should be ready as a pre-commit hook by the end of this year!
+
 [![Actions Status][actions-badge]][actions-link]
 [![pre-commit.ci status][pre-commit-badge]][pre-commit-link]
 [![codecov percentage][codecov-badge]][codecov-link]
