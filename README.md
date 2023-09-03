@@ -25,21 +25,22 @@ Tool to automatically replace `import *` imports in Python files with explicit i
 ## Installation
 
 Install `rmstar` globally to use it through CLI -
+
 ```bash
 pip install rmstar
 ```
 
 or add `rmstar` in `.pre-commit-config.yaml` -
+
 ```yaml
 - repo: https://github.com/Saransh-cpp/rmstar
   rev: v1.4
   hooks:
     - id: rmstar
-      args: [-i]  # See docs for all args (-i edits file in-place)
-      additional_dependencies:  # The libraries or packages your code imports
+      args: [-i] # See docs for all args (-i edits file in-place)
+      additional_dependencies: # The libraries or packages your code imports
         - ...
 ```
-
 
 ## Usage
 
@@ -53,7 +54,7 @@ pre-commit install
 ```
 
 Optionally, the pre-commits (including `rmstar`) can be manually triggered for
-all the files using - 
+all the files using -
 
 ```bash
 pre-commit run --all-files
