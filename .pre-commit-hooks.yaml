@@ -3,7 +3,7 @@
   description: "Automatically replace `import *` imports in Python files with explicit imports"
   entry: rmstar
   language: python
-  "types_or": [python, pyi]
+  types_or: [python, pyi]
   args: []
   require_serial: true
   additional_dependencies: ["pyflakes"]
