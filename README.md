@@ -39,7 +39,7 @@ or add `rmstar` in `.pre-commit-config.yaml` -
     - id: rmstar
       args: [-i] # See docs for all args (-i edits file in-place)
       additional_dependencies: # The libraries or packages your code imports
-        - ...
+        - ... # Should be . if running inside a library (to install the library itself in the environment)
 ```
 
 ## Usage
