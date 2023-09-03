@@ -1,5 +1,9 @@
 # rmstar
 
+> **Warning**
+>
+> This is not ready to be used as a pre-commit hook yet. The CLI works fine, and the infrastructure is up-to-date. This should be ready as a pre-commit hook by the end of this year!
+
 [![Actions Status][actions-badge]][actions-link]
 [![pre-commit.ci status][pre-commit-badge]][pre-commit-link]
 [![codecov percentage][codecov-badge]][codecov-link]
@@ -12,6 +16,8 @@
 
 Tool to automatically replace `import *` imports in Python files with explicit imports
 
+> **Note**
+>
 > rmstar is an actively maintained fork of the original [removestar](https://github.com/asmeurer/removestar) (which is now not actively maintained). All the credits for the original code and logic goes to [Aaron Meurer (or asmeurer)](https://github.com/asmeurer) and the contributors of removestar. This repository keeps the original commits intact and builds on top of them. rmstar also comes as a `pre-commit` hook for ease of use (which was the original motivation behind this fork).
 
 ## Installation
